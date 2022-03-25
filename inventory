@@ -1,0 +1,3 @@
+[nodes]
+node1 ansible_ssh_host=192.168.200.4 ansible_ssh_user=root
+node2 ansible_ssh_host=192.168.200.5 ansible_ssh_user=root

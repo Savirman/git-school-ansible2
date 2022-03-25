@@ -1,0 +1,24 @@
+---
+- name: Create users
+  hosts: localhost
+
+  vars:
+    alice_pass: "{{lookup('file', 'pass01') }}"
+    bob_pass: "{{lookup('file', 'pass02') }}"
+    carol_pass: "{{lookup('file', 'pass03') }}"
+
+  tasks:
+  - name: Create user '{{ item }}'
+    ansible.builtin.user:
+      name: '{{ item }}'
+      comment: '{{ item }}@example.com'
+      create_home: yes
+      home: '/home/{{ item }}'
+      password: "{{ '{{ item }}_pass' | password_hash('sha512') }}"
+      update_password: on_create
+      shell: /bin/bash
+      state: present
+    loop:
+      - 'alice'
+      - 'bob'
+      - 'carol'
